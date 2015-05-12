@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>server2.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="database.html">
+                  database.js
+                </a>
+              
+                
+                <a class="source" href="server.html">
+                  server.js
+                </a>
+              
+                
+                <a class="source" href="server2.html">
+                  server2.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>server2.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><a href="https://www.npmjs.com/package/express">express</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>),
+    app = express(),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><a href="https://www.npmjs.com/package/lodash">lodash</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><a href="https://www.npmjs.com/package/body-parser">express body-parser</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'body-parser'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><a href="http://localhost:63342/api/docs/database.html">database.js</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Database = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./database'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p><a href="https://www.npmjs.com/package/q">Q</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Q = <span class="hljs-built_in">require</span>(<span class="hljs-string">'q'</span>),
+
+    separator = <span class="hljs-string">','</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>[UNUSED]
+A small helper utillity function which returns
+the path to a file as seen from the location of
+this server2.js file</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    path = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(_path)</span> </span>{
+        <span class="hljs-keyword">return</span> __dirname + _path
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>We’ll want to split the query string parameter value according to a separator,
+this function is used to split the query string.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    splitter = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(str)</span> </span>{
+        <span class="hljs-keyword">return</span> str.split(separator || <span class="hljs-string">','</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(s)</span> </span>{
+            <span class="hljs-keyword">return</span> +s;
+        })
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>The body parser can be hooked up for each request which comes to the server.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.use(bodyParser.json());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h2 id="initialize-the-databases">Initialize the databases</h2>
+<p>Because we do not typically know which search parameters will be
+in the query string. We cannot know which “databases” we will
+need to search for data.
+This is why we set a list of ‘search terms’ and for each of these
+we get the right database.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> dbs = {};
+<span class="hljs-keyword">var</span> items = [<span class="hljs-string">'audience'</span>, <span class="hljs-string">'subject'</span>, <span class="hljs-string">'theme'</span>, <span class="hljs-string">'course'</span>];
+items.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(item)</span> </span>{
+    Database.init(item).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(db)</span> </span>{
+        dbs[item] = db;
+    });
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <h2 id="endpoints">EndPoints</h2>
+<p>Example:
+<a href="http://localhost:1337/course?audience=1&amp;subject=1&amp;theme=1">http://localhost:1337/course?audience=1&amp;subject=1&amp;theme=1</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/course'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{
+    <span class="hljs-keyword">var</span> qs = {},
+        result = {
+            chosen: {}
+        };
+
+    <span class="hljs-built_in">Object</span>.keys(req.query).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+        qs[key] = splitter(req.query[key]);
+    });
+
+    Q.all([
+        getChosenItems(qs, result),
+        getCourses(qs, result)
+    ]).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+        getAvailable(qs, result).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+            res.status(<span class="hljs-number">200</span>).json(result);
+        });
+    });
+
+
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h2 id="getcourses">getCourses</h2>
+<p>Get all of the courses in the database which comply to the
+query string parameters. We need to keep in mind that the
+query string parameters can vary, so we’ll need to check these
+and make every query available as both a database and a key in
+in the search query.
+The way MongoDB works is that we pass in an object which represents
+the filter we’ll want to use. This filter logic can handle everything
+from <code>and</code> and <code>or</code> and all the other logical operators.
+<a href="http://docs.mongodb.org/manual/reference/method/db.collection.find/">MongoDB find</a></p>
+<p>Imagine we are looking for courses with:</p>
+<pre><code>audience=<span class="hljs-number">1</span>,<span class="hljs-number">2</span>
+subject=<span class="hljs-number">1</span>
+</code></pre><p>Each course might have a collection audience and subject. The Ids we’re searching
+for should be in these collections. If they are all in there we can return that
+as a result.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCourses</span><span class="hljs-params">(qs, result)</span> </span>{
+    <span class="hljs-keyword">var</span> deferred = Q.defer(),
+        query,
+        keys = <span class="hljs-built_in">Object</span>.keys(qs);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Create the query, we can have no keys, one key or multiple keys.
+with zero keys we’ll throw an exception. With one key we need need to
+look for that item and with multiple we’ll need a <code>and</code> query.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (keys.length === <span class="hljs-number">1</span>) {
+        query = {key: {$<span class="hljs-keyword">in</span>: qs[key]}};
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (keys.length &gt; <span class="hljs-number">1</span>) {
+        query = {
+            $and: keys.map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+                <span class="hljs-keyword">var</span> _r = {};
+                _r[key] = {$<span class="hljs-keyword">in</span>: qs[key]};
+                <span class="hljs-keyword">return</span> _r;
+            })
+        };
+    }
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-string">'error: no keys'</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Get the items from the database by the query</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    dbs.course.filter(query).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(courses)</span> </span>{
+        result.courses = courses.docs;
+        deferred.resolve(<span class="hljs-literal">true</span>);
+    }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span> </span>{
+        <span class="hljs-built_in">console</span>.log(err);
+    });
+
+    <span class="hljs-keyword">return</span> deferred.promise;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <h2 id="getchosenitems">getChosenItems</h2>
+<p>Our query not only produces courses which we’ve selected through the
+query. We also select the actual items with the query string. This function
+retrieves these items and augments the result object with these <code>result.chosen</code>
+items.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getChosenItems</span><span class="hljs-params">(qs, result)</span> </span>{
+    <span class="hljs-keyword">var</span> deferred = Q.defer();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Get the chosen items from the database, we get the right database by key
+and filter the database objects by query.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> promises = <span class="hljs-built_in">Object</span>.keys(qs).map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+        <span class="hljs-keyword">var</span> query = {id: {$<span class="hljs-keyword">in</span>: qs[key]}};
+        <span class="hljs-keyword">return</span> dbs[key].filter(query);
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Resolve all the promises which we created by looping through the keys</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Q.all(promises).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(selectedItems)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>for each resolved item we will start to fill the result object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        selectedItems.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(selectedItem)</span> </span>{
+            <span class="hljs-keyword">if</span> (!result.chosen[selectedItem.target])
+                result.chosen[selectedItem.target] = selectedItem.docs;
+            <span class="hljs-keyword">else</span>
+                result.chosen[selectedItem.target] =
+                    result.chosen[selectedItem.target].concat(selectedItem.docs);
+        });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>now resolve the promise</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        deferred.resolve(<span class="hljs-literal">true</span>);
+    });
+
+    <span class="hljs-keyword">return</span> deferred.promise;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <h2 id="getavailable">getAvailable</h2>
+<p>Returns a promise resolving into all of the available courses..</p>
+<p>MORE DOCUMENTATION NEEDED. I cannot seem to remember what this function is
+supposed to do…(CK)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAvailable</span><span class="hljs-params">(qs, result)</span> </span>{
+    <span class="hljs-keyword">var</span> deferred = Q.defer(),
+        keys = <span class="hljs-built_in">Object</span>.keys(qs),
+        collector = {
+            append: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, array)</span> </span>{
+                <span class="hljs-keyword">if</span> (!array <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>) <span class="hljs-keyword">throw</span> <span class="hljs-string">'not an array, cannot parse'</span>;
+                <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>[key]) <span class="hljs-keyword">this</span>[key] = array;
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">this</span>[key] = <span class="hljs-keyword">this</span>[key].concat(array);
+            }
+        };
+
+    keys.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+        result.courses.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(course)</span> </span>{
+            collector.append(key, course[key]);
+        });
+    });
+
+    <span class="hljs-keyword">if</span> (keys.length === <span class="hljs-number">1</span>) {
+        query = {key: {$<span class="hljs-keyword">in</span>: qs[key]}};
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (keys.length &gt; <span class="hljs-number">1</span>) {
+        query = {
+            $and: keys.map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
+                <span class="hljs-keyword">var</span> _r = {};
+                _r[key] = {$<span class="hljs-keyword">in</span>: qs[key]};
+                <span class="hljs-keyword">return</span> _r;
+            })
+        };
+    }
+    <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">throw</span> <span class="hljs-string">'error: no keys'</span>;
+    }
+
+    dbs.course.filter(query).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(courses)</span> </span>{
+        result.available = courses.docs;
+        deferred.resolve(<span class="hljs-literal">true</span>);
+    }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span> </span>{
+        <span class="hljs-built_in">console</span>.log(err);
+    });
+
+    <span class="hljs-keyword">return</span> deferred.promise;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Application start listening</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.listen(<span class="hljs-number">1338</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'application listening on http://localhost:1338/'</span>);
+    <span class="hljs-keyword">var</span> open = <span class="hljs-built_in">require</span>(<span class="hljs-string">'open'</span>);
+    <span class="hljs-keyword">if</span> (open) open(<span class="hljs-string">'http://localhost:1338/course?audience=1&amp;subject=1&amp;theme=1'</span>);
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

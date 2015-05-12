@@ -9,5 +9,8 @@
     "nedb": "^1.1.2",
     "q": "^1.4.0",
     "request": "^2.55.0"
+  },
+  "devDependencies": {
+    "open": "0.0.5"
   }
 }
