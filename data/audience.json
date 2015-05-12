@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Leidinggevenden"
+  },
+  {
+    "id": 2,
+    "name": "Managers"
+  },
+  {
+    "id": 3,
+    "name": "Professionals"
+  },
+  {
+    "id": 4,
+    "name": "Stafmedewerkers"
+  }
+]

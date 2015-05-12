@@ -1,0 +1,13 @@
+{
+  "name": "nedbapi",
+  "version": "0.0.0",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "^4.12.3",
+    "fs-extra": "^0.18.3",
+    "lodash": "^3.8.0",
+    "nedb": "^1.1.2",
+    "q": "^1.4.0",
+    "request": "^2.55.0"
+  }
+}
