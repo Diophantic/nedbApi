@@ -55,7 +55,8 @@ items.forEach(function (item) {
 app.get('/course', function (req, res) {
     var qs = {},
         result = {
-            chosen: {}
+            chosen: {},
+            available: {}
         };
 
     Object.keys(req.query).forEach(function (key) {
@@ -173,11 +174,12 @@ function getChosenItems(qs, result) {
 function getAvailable(qs, result) {
     var deferred = Q.defer(),
         keys = Object.keys(qs),
+        promises = [],
         collector = {
             append: function (key, array) {
                 if (!array instanceof Array) throw 'not an array, cannot parse';
-                if (!this[key]) this[key] = array;
-                else this[key] = this[key].concat(array);
+                if (!this[key]) this[key] = _.uniq(array);
+                else this[key] = _.uniq(this[key].concat(array));
             }
         };
 
@@ -185,29 +187,15 @@ function getAvailable(qs, result) {
         result.courses.forEach(function (course) {
             collector.append(key, course[key]);
         });
+
+        promises.push(dbs[key].filter({ id: { $in: collector[key] } }));
     });
 
-    if (keys.length === 1) {
-        query = {key: {$in: qs[key]}};
-    }
-    else if (keys.length > 1) {
-        query = {
-            $and: keys.map(function (key) {
-                var _r = {};
-                _r[key] = {$in: qs[key]};
-                return _r;
-            })
-        };
-    }
-    else {
-        throw 'error: no keys';
-    }
-
-    dbs.course.filter(query).then(function (courses) {
-        result.available = courses.docs;
+    Q.all(promises).then(function(resultSet) {
+        resultSet.forEach(function(_r) {
+           result.available[_r.target] = _r.docs;
+        });
         deferred.resolve(true);
-    }).catch(function (err) {
-        console.log(err);
     });
 
     return deferred.promise;
