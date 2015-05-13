@@ -2,9 +2,9 @@
   {
     "id": 1,
     "name": "Ik en de Anderen",
-    "audience": [1,2,4],
-    "theme": [1,2,4,7],
-    "subject": [1,2,3,4,5]
+    "audience": [1,2],
+    "theme": [1,2],
+    "subject": [1,2]
   },
   {
     "id": 2,
@@ -16,9 +16,9 @@
   {
     "id": 3,
     "name": "Baak Leiderschap Programma",
-    "audience": [1,3],
-    "theme": [1,2,3],
-    "subject": [1,3,6]
+    "audience": [1],
+    "theme": [1],
+    "subject": [1]
   },
   {
     "id": 4,

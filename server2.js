@@ -181,18 +181,29 @@ function getAvailable(qs, result) {
         promises = [],
         collector = {
             append: function (key, array) {
-                if (!array instanceof Array) throw 'not an array, cannot parse';
-                if (!this[key]) this[key] = _.uniq(array);
-                else this[key] = _.uniq(this[key].concat(array));
+                if (!array instanceof Array){
+                    throw 'not an array, cannot parse';
+                }
+                if (!this[key]){
+                    this[key] = _.uniq(array);
+                } else {
+                    this[key] = _.uniq(this[key].concat(array));
+                }
             }
         };
 
     keys.forEach(function (key) {
+
         result.courses.forEach(function (course) {
             collector.append(key, course[key]);
         });
 
-        promises.push(dbs[key].filter({ id: { $in: collector[key] } }));
+        if(collector[key]) {
+            promises.push(dbs[key].filter({id: {$in: collector[key]}}));
+        } else {
+            promises.push(dbs[key].filter());
+        }
+
     });
 
     Q.all(promises).then(function(resultSet) {
@@ -209,6 +220,6 @@ function getAvailable(qs, result) {
 app.listen(1338, function () {
     console.log('application listening on http://localhost:1338/');
     var open = require('open');
-    if (open) open('http://localhost:1338/course?audience=1&subject=1&theme=1');
+    if (open) open('http://localhost:1338/course?audience=3&subject=2&theme=3');
 });
 
