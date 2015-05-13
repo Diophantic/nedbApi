@@ -132,9 +132,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    Q = <span class="hljs-built_in">require</span>(<span class="hljs-string">'q'</span>),
-
-    separator = <span class="hljs-string">','</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    Q = <span class="hljs-built_in">require</span>(<span class="hljs-string">'q'</span>),</pre></div></div>
             
         </li>
         
@@ -144,6 +142,23 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p><a href="https://www.npmjs.com/package/cors">CORS</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    cors = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cors'</span>),
+
+    separator = <span class="hljs-string">','</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>[UNUSED]
 A small helper utillity function which returns
@@ -159,11 +174,11 @@ this server2.js file</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>We’ll want to split the query string parameter value according to a separator,
 this function is used to split the query string.</p>
@@ -179,11 +194,11 @@ this function is used to split the query string.</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>The body parser can be hooked up for each request which comes to the server.</p>
 
@@ -194,11 +209,26 @@ this function is used to split the query string.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Use CORS to allow cross-origin requests</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>app.use(cors());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <h2 id="initialize-the-databases">Initialize the databases</h2>
 <p>Because we do not typically know which search parameters will be
@@ -220,11 +250,11 @@ items.forEach(<span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-11">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <h2 id="endpoints">EndPoints</h2>
 <p>Example:
@@ -235,7 +265,8 @@ items.forEach(<span class="hljs-function"><span class="hljs-keyword">function</s
             <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/course'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(req, res)</span> </span>{
     <span class="hljs-keyword">var</span> qs = {},
         result = {
-            chosen: {}
+            chosen: {},
+            available: {}
         };
 
     <span class="hljs-built_in">Object</span>.keys(req.query).forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
@@ -257,11 +288,11 @@ items.forEach(<span class="hljs-function"><span class="hljs-keyword">function</s
         </li>
         
         
-        <li id="section-12">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <h2 id="getcourses">getCourses</h2>
 <p>Get all of the courses in the database which comply to the
@@ -290,11 +321,11 @@ as a result.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Create the query, we can have no keys, one key or multiple keys.
 with zero keys we’ll throw an exception. With one key we need need to
@@ -321,11 +352,11 @@ look for that item and with multiple we’ll need a <code>and</code> query.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Get the items from the database by the query</p>
 
@@ -344,11 +375,11 @@ look for that item and with multiple we’ll need a <code>and</code> query.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <h2 id="getchosenitems">getChosenItems</h2>
 <p>Our query not only produces courses which we’ve selected through the
@@ -364,11 +395,11 @@ items.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Get the chosen items from the database, we get the right database by key
 and filter the database objects by query.</p>
@@ -383,11 +414,11 @@ and filter the database objects by query.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Resolve all the promises which we created by looping through the keys</p>
 
@@ -398,11 +429,11 @@ and filter the database objects by query.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>for each resolved item we will start to fill the result object</p>
 
@@ -419,11 +450,11 @@ and filter the database objects by query.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>now resolve the promise</p>
 
@@ -438,11 +469,11 @@ and filter the database objects by query.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <h2 id="getavailable">getAvailable</h2>
 <p>Returns a promise resolving into all of the available courses..</p>
@@ -454,11 +485,12 @@ supposed to do…(CK)</p>
             <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAvailable</span><span class="hljs-params">(qs, result)</span> </span>{
     <span class="hljs-keyword">var</span> deferred = Q.defer(),
         keys = <span class="hljs-built_in">Object</span>.keys(qs),
+        promises = [],
         collector = {
             append: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key, array)</span> </span>{
                 <span class="hljs-keyword">if</span> (!array <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>) <span class="hljs-keyword">throw</span> <span class="hljs-string">'not an array, cannot parse'</span>;
-                <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>[key]) <span class="hljs-keyword">this</span>[key] = array;
-                <span class="hljs-keyword">else</span> <span class="hljs-keyword">this</span>[key] = <span class="hljs-keyword">this</span>[key].concat(array);
+                <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>[key]) <span class="hljs-keyword">this</span>[key] = _.uniq(array);
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">this</span>[key] = _.uniq(<span class="hljs-keyword">this</span>[key].concat(array));
             }
         };
 
@@ -466,29 +498,15 @@ supposed to do…(CK)</p>
         result.courses.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(course)</span> </span>{
             collector.append(key, course[key]);
         });
+
+        promises.push(dbs[key].filter({ id: { $<span class="hljs-keyword">in</span>: collector[key] } }));
     });
 
-    <span class="hljs-keyword">if</span> (keys.length === <span class="hljs-number">1</span>) {
-        query = {key: {$<span class="hljs-keyword">in</span>: qs[key]}};
-    }
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (keys.length &gt; <span class="hljs-number">1</span>) {
-        query = {
-            $and: keys.map(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(key)</span> </span>{
-                <span class="hljs-keyword">var</span> _r = {};
-                _r[key] = {$<span class="hljs-keyword">in</span>: qs[key]};
-                <span class="hljs-keyword">return</span> _r;
-            })
-        };
-    }
-    <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">throw</span> <span class="hljs-string">'error: no keys'</span>;
-    }
-
-    dbs.course.filter(query).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(courses)</span> </span>{
-        result.available = courses.docs;
+    Q.all(promises).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(resultSet)</span> </span>{
+        resultSet.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(_r)</span> </span>{
+           result.available[_r.target] = _r.docs;
+        });
         deferred.resolve(<span class="hljs-literal">true</span>);
-    }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(err)</span> </span>{
-        <span class="hljs-built_in">console</span>.log(err);
     });
 
     <span class="hljs-keyword">return</span> deferred.promise;
@@ -497,11 +515,11 @@ supposed to do…(CK)</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Application start listening</p>
 
