@@ -101,31 +101,60 @@ app.get('/course', function (req, res) {
 // as a result.
 function getCourses(qs, result) {
     var deferred = Q.defer(),
-        query,
+        query = {},
+        subquery = [],
         keys = Object.keys(qs);
 
     // Create the query, we can have no keys, one key or multiple keys.
     // with zero keys we'll throw an exception. With one key we need need to
     // look for that item and with multiple we'll need a ```and``` query.
     if (keys.length === 1) {
-        query = {},
         key = keys[0];
-        query[key] = {$in: qs[keys]};
-    }
-    else if (keys.length > 1) {
-        query = {
-            $and: keys.map(function (key) {
-                var _r = {};
-                _r[key] = {$in: qs[key]};
-                return _r;
-            })
-        };
-    }
-    else {
+
+        // Create an AND query
+        if(qs[key].length > 1){
+
+            // Loop through each item in the query-string property
+            qs[key].forEach(function(k){
+                var s = {};
+                s[key] = k;
+                subquery.push(s);
+            });
+
+            query = { $and: subquery };
+
+        // Create an IS query
+        } else {
+            query[key] = qs[key][0];
+        }
+
+    } else if (keys.length > 1) {
+
+        keys.forEach(function(k){
+
+            // Create an AND query
+            if(qs[k].length > 1){
+
+                // Loop through each item in the query-string property
+                qs[k].forEach(function(l){
+                    var s = {};
+                    s[k] = l;
+                    subquery.push(s);
+                });
+
+                query = { $and: subquery };
+
+                // Create an IS query
+            } else {
+                query[k] = qs[k][0];
+            }
+
+        });
+
+
+    } else {
         throw 'error: no keys';
     }
-
-    console.log(query);
 
     // Get the items from the database by the query
     dbs.course.filter(query).then(function (courses) {
@@ -224,6 +253,6 @@ function getAvailable(qs, result) {
 app.listen(1338, function () {
     console.log('application listening on http://localhost:1338/');
     var open = require('open');
-    if (open) open('http://localhost:1338/course?audience=1');
+    if (open) open('http://localhost:1338/course?audience=1&theme=1');
 });
 
