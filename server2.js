@@ -108,7 +108,9 @@ function getCourses(qs, result) {
     // with zero keys we'll throw an exception. With one key we need need to
     // look for that item and with multiple we'll need a ```and``` query.
     if (keys.length === 1) {
-        query = {key: {$in: qs[key]}};
+        query = {},
+        key = keys[0];
+        query[key] = {$in: qs[keys]};
     }
     else if (keys.length > 1) {
         query = {
@@ -122,6 +124,8 @@ function getCourses(qs, result) {
     else {
         throw 'error: no keys';
     }
+
+    console.log(query);
 
     // Get the items from the database by the query
     dbs.course.filter(query).then(function (courses) {
@@ -220,6 +224,6 @@ function getAvailable(qs, result) {
 app.listen(1338, function () {
     console.log('application listening on http://localhost:1338/');
     var open = require('open');
-    if (open) open('http://localhost:1338/course?audience=3&subject=2&theme=3');
+    if (open) open('http://localhost:1338/course?audience=1');
 });
 
