@@ -10,6 +10,8 @@ var express = require('express'),
     Database = require('./database'),
     // [Q](https://www.npmjs.com/package/q)
     Q = require('q'),
+    // [CORS](https://www.npmjs.com/package/cors)
+    cors = require('cors'),
 
     separator = ',',
 
@@ -32,6 +34,8 @@ var express = require('express'),
 // The body parser can be hooked up for each request which comes to the server.
 app.use(bodyParser.json());
 
+// Use CORS to allow cross-origin requests
+app.use(cors());
 
 // ## Initialize the databases
 // Because we do not typically know which search parameters will be
