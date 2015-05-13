@@ -11,6 +11,7 @@
     "request": "^2.55.0"
   },
   "devDependencies": {
+    "cors": "^2.6.0",
     "open": "0.0.5"
   }
 }
