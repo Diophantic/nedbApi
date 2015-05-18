@@ -44,7 +44,7 @@ app.use(cors());
 // This is why we set a list of 'search terms' and for each of these
 // we get the right database.
 var dbs = {};
-var items = ['audience', 'subject', 'theme', 'course'];
+var items = ['audience', 'theme', 'type', 'course'];
 items.forEach(function (item) {
     Database.init(item).then(function (db) {
         dbs[item] = db;
@@ -94,9 +94,9 @@ app.get('/course', function (req, res) {
 // Imagine we are looking for courses with:
 // ```
 // audience=1,2
-// subject=1
+// theme=1
 // ```
-// Each course might have a collection audience and subject. The Ids we're searching
+// Each course might have a collection audience and theme. The Ids we're searching
 // for should be in these collections. If they are all in there we can return that
 // as a result.
 function getCourses(qs, result) {
@@ -125,7 +125,9 @@ function getCourses(qs, result) {
 
         // Create an IS query
         } else {
-            query[key] = qs[key][0];
+            if(qs[k][0] !== 0) {
+                query[key] = qs[key][0];
+            }
         }
 
     } else if (keys.length > 1) {
@@ -146,7 +148,9 @@ function getCourses(qs, result) {
 
                 // Create an IS query
             } else {
-                query[k] = qs[k][0];
+                if(qs[k][0] !== 0) {
+                    query[k] = qs[k][0];
+                }
             }
 
         });
@@ -253,6 +257,6 @@ function getAvailable(qs, result) {
 app.listen(1338, function () {
     console.log('application listening on http://localhost:1338/');
     var open = require('open');
-    if (open) open('http://localhost:1338/course?audience=1&theme=1');
+    if (open) open('http://localhost:1338/course?audience=1&theme=&type=');
 });
 
