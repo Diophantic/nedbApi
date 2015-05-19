@@ -211,30 +211,39 @@ function getAvailable(qs, result) {
 
     // loop through items to ensure all available filters are returned
 
-    filters.forEach(function (key) {
+    if (result.courses.length === 0) {
+        filters.forEach(function(key) {
+            result.available[key] = [];
+        });
+        setTimeout(function() { deferred.resolve(true); }, 0);
+    }
+    else {
+        filters.forEach(function (key) {
+            result.courses.forEach(function (course) {
+                if (course[key]) {
+                    collector.append(key, course[key]);
+                }
 
-        result.courses.forEach(function (course) {
-            if(course[key]) {
-                collector.append(key, course[key]);
-            }
+                if (dbs[key] && course[key] && course[key].length > 0) {
+                    if (collector[key]) {
+                        promises.push(dbs[key].filter({id: {$in: collector[key]}}));
+                    }
+                }
+                else {
+                    result.available[key] = [];
+                }
+            });
         });
 
-        if(dbs[key]){
-            if(collector[key]) {
-                promises.push(dbs[key].filter({id: {$in: collector[key]}}));
-            } else {
-                promises.push(dbs[key].filter());
-            }
-        }
-
-    });
-
-    Q.all(promises).then(function(resultSet) {
-        resultSet.forEach(function(_r) {
-           result.available[_r.target] = _r.docs;
+        Q.all(promises).then(function(resultSet) {
+            resultSet.forEach(function(_r) {
+                result.available[_r.target] = _r.docs;
+            });
+            deferred.resolve(true);
         });
-        deferred.resolve(true);
-    });
+
+    }
+
 
     return deferred.promise;
 }

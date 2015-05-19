@@ -4,7 +4,8 @@
     "name": "Ik en de Anderen",
     "audience": [1,2],
     "type": [1],
-    "theme": [1]
+    "theme": [1],
+    "location": [1]
   },
   {
     "id": 2,
@@ -16,7 +17,7 @@
   {
     "id": 3,
     "name": "Baak Leiderschap Programma",
-    "audience": [1],
+    "audience": [3],
     "type": [3],
     "theme": [3]
   }
