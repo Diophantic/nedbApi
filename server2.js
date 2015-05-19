@@ -64,8 +64,11 @@ app.get('/course', function (req, res) {
             courses: null
         };
 
+    // Create query string object and remove strings which don't correspond to an existing DB
     Object.keys(req.query).forEach(function (key) {
-        qs[key] = splitter(req.query[key]);
+        if(dbs[key]){
+            qs[key] = splitter(req.query[key]);
+        };
     });
 
     Q.all([
@@ -80,7 +83,6 @@ app.get('/course', function (req, res) {
 
 
 });
-
 
 // ## getCourses
 // Get all of the courses in the database which comply to the
