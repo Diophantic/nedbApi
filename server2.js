@@ -60,7 +60,8 @@ app.get('/course', function (req, res) {
     var qs = {},
         result = {
             chosen: {},
-            available: {}
+            available: {},
+            courses: null
         };
 
     Object.keys(req.query).forEach(function (key) {
@@ -72,6 +73,7 @@ app.get('/course', function (req, res) {
         getCourses(qs, result)
     ]).then(function () {
         getAvailable(qs, result).then(function () {
+            result.courses = result.courses.length; // remove courses and only return amount
             res.status(200).json(result);
         });
     });
@@ -162,6 +164,7 @@ function getCourses(qs, result) {
 
     // Get the items from the database by the query
     dbs.course.filter(query).then(function (courses) {
+        console.log(courses.docs.length);
         result.courses = courses.docs;
         deferred.resolve(true);
     }).catch(function (err) {
