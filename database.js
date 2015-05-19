@@ -41,7 +41,6 @@ Database.init = function (name, pathToDbFile, pathToJSON) {
         // load all of the objects described in the JSON document into the
         // newly created database...
         fs.readFile(pathToJSON, 'utf8', function (err, text) {
-            console.log(pathToJSON);
             var data = JSON.parse(text);
             db._db.insert(data, function (err, insertedData) {
                 if (err) deferred.reject(err);
