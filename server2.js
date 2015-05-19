@@ -112,29 +112,7 @@ function getCourses(qs, result) {
     // Create the query, we can have no keys, one key or multiple keys.
     // with zero keys we'll throw an exception. With one key we need need to
     // look for that item and with multiple we'll need a ```and``` query.
-    if (keys.length === 1) {
-        key = keys[0];
-
-        // Create an AND query
-        if(qs[key].length > 1){
-
-            // Loop through each item in the query-string property
-            qs[key].forEach(function(k){
-                var s = {};
-                s[key] = k;
-                subquery.push(s);
-            });
-
-            query = { $and: subquery };
-
-        // Create an IS query
-        } else {
-            if(qs[k][0] !== 0) {
-                query[key] = qs[key][0];
-            }
-        }
-
-    } else if (keys.length > 1) {
+    if (keys.length > 0) {
 
         keys.forEach(function(k){
 
@@ -159,14 +137,12 @@ function getCourses(qs, result) {
 
         });
 
-
     } else {
         throw 'error: no keys';
     }
 
     // Get the items from the database by the query
     dbs.course.filter(query).then(function (courses) {
-        console.log(courses.docs.length);
         result.courses = courses.docs;
         deferred.resolve(true);
     }).catch(function (err) {
@@ -240,10 +216,12 @@ function getAvailable(qs, result) {
             collector.append(key, course[key]);
         });
 
-        if(collector[key]) {
-            promises.push(dbs[key].filter({id: {$in: collector[key]}}));
-        } else {
-            promises.push(dbs[key].filter());
+        if(dbs[key]){
+            if(collector[key]) {
+                promises.push(dbs[key].filter({id: {$in: collector[key]}}));
+            } else {
+                promises.push(dbs[key].filter());
+            }
         }
 
     });
