@@ -44,7 +44,8 @@ app.use(cors());
 // This is why we set a list of 'search terms' and for each of these
 // we get the right database.
 var dbs = {};
-var items = ['audience', 'theme', 'type', 'course'];
+var items = ['audience', 'theme', 'type', 'course', 'end-date', 'start-date', 'end-price', 'start-price', 'location'];
+var filters = ['audience', 'theme', 'type', 'end-date', 'start-date', 'end-price', 'start-price', 'location'];
 items.forEach(function (item) {
     Database.init(item).then(function (db) {
         dbs[item] = db;
@@ -137,8 +138,6 @@ function getCourses(qs, result) {
 
         });
 
-    } else {
-        throw 'error: no keys';
     }
 
     // Get the items from the database by the query
@@ -210,10 +209,14 @@ function getAvailable(qs, result) {
             }
         };
 
-    keys.forEach(function (key) {
+    // loop through items to ensure all available filters are returned
+
+    filters.forEach(function (key) {
 
         result.courses.forEach(function (course) {
-            collector.append(key, course[key]);
+            if(course[key]) {
+                collector.append(key, course[key]);
+            }
         });
 
         if(dbs[key]){
@@ -240,6 +243,6 @@ function getAvailable(qs, result) {
 app.listen(1338, function () {
     console.log('application listening on http://localhost:1338/');
     var open = require('open');
-    if (open) open('http://localhost:1338/course?audience=1&theme=&type=');
+    // if (open) open('http://localhost:1338/course?audience=1,2');
 });
 

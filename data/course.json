@@ -2,22 +2,22 @@
   {
     "id": 1,
     "name": "Ik en de Anderen",
-    "audience": [1],
+    "audience": [1,2],
     "type": [1],
-    "subject": [1]
+    "theme": [1]
   },
   {
     "id": 2,
     "name": "Effectieve Persoonlijke Communicatie",
-    "audience": [2],
+    "audience": [1,2],
     "type": [2],
-    "subject": [2]
+    "theme": [2]
   },
   {
     "id": 3,
     "name": "Baak Leiderschap Programma",
-    "audience": [3],
+    "audience": [1],
     "type": [3],
-    "subject": [3]
+    "theme": [3]
   }
 ]
